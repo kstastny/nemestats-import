@@ -33,7 +33,6 @@ let private jsonToPlayers (root: PlayersInGamingGroupJson.Root) =
     })
 
 
-//TODO error handling
 let getPlayersInGamingGroup (cancellationToken: CancellationToken) (gamingGroup: GamingGroup) : Task<Result<Player list, HttpError>> =
     
     taskResult {
@@ -42,7 +41,6 @@ let getPlayersInGamingGroup (cancellationToken: CancellationToken) (gamingGroup:
             |> createRequest System.Net.Http.HttpMethod.Get
             |> getResponse cancellationToken
         
-        //TODO tryParse
         return
             PlayersInGamingGroupJson.Parse response
             |> jsonToPlayers

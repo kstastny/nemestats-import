@@ -10,7 +10,9 @@ let apply resultF result =
     | Ok f -> Result.map f result
     | Error e -> Error e
 
-let fold results =
+//https://stackoverflow.com/questions/50789065/turn-list-of-result-into-result-of-list-inside-a-computation-expression
+// and https://fsharpforfunandprofit.com/posts/elevated-world-4/
+let sequence results =
     let foldFn item acc =
         match acc, item with
         | Error e, _ | _, Error e -> Error e
@@ -198,6 +200,14 @@ module TaskResult =
 
         }
 
+    let sequence (l: Task<Result<'a, 'b>> list) : Task<Result<'a list, 'b>> =
+        task {
+            Task.WaitAll( l |> Seq.cast<Task> |> Array.ofSeq)
+            
+            return l |> List.map (fun y -> y.Result) |> sequence
+        }
+    
+    
     let bind2 (f:'a -> 'b -> Task<Result<'c,'d>>) (x:Task<Result<'a,'d>>) (y:Task<Result<'b,'d>>) =
         task {
             let! xR = x
@@ -283,7 +293,6 @@ module TaskResult =
 
         //unit -> M<'T>
         member __.Zero () = () |> retn
-
 
 
     let taskResult = TaskResultBuilder()
