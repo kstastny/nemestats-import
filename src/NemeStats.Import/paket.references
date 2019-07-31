@@ -1,0 +1,13 @@
+group Server
+
+    FSharp.Core
+    FSharp.Data
+
+    TaskBuilder.fs
+    
+    Serilog
+    Serilog.AspNetCore
+    Serilog.Sinks.Console
+    Serilog.Sinks.File
+    Serilog.Formatting.Compact
+    Destructurama.FSharp.NetCore
