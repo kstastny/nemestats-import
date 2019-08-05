@@ -8,6 +8,8 @@ group Server
 
     nuget TaskBuilder.fs
 
+    nuget Newtonsoft.Json
+
     //logging
     nuget Serilog
     nuget Serilog.AspNetCore

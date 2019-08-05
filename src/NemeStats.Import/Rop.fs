@@ -18,6 +18,17 @@ let sequence results =
         | Error e, _ | _, Error e -> Error e
         | Ok l, Ok v -> v :: l |> Ok
     List.foldBack foldFn results (Ok [])
+    
+    
+// http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Bitraversable.html is the same?
+let bisequence results =     
+    let foldFn item (acc: Result<'a list, 'e list>) =
+        match acc, item with
+        | Ok l, Ok v -> v :: l |> Ok
+        | Ok _, Error e -> Error [ e ]
+        | Error e1, Ok _ -> Error e1
+        | Error e1, Error e2 -> Error (e2 :: e1)
+    List.foldBack foldFn results (Ok [])
 
 let bindOption e opt =
     match opt with
@@ -206,6 +217,13 @@ module TaskResult =
             
             return l |> List.map (fun y -> y.Result) |> sequence
         }
+        
+    let bisequence (l: Task<Result<'a, 'b>> list) : Task<Result<'a list, 'b list>> =
+        task {
+            Task.WaitAll( l |> Seq.cast<Task> |> Array.ofSeq)
+            
+            return l |> List.map (fun y -> y.Result) |> bisequence
+        }        
     
     
     let bind2 (f:'a -> 'b -> Task<Result<'c,'d>>) (x:Task<Result<'a,'d>>) (y:Task<Result<'b,'d>>) =

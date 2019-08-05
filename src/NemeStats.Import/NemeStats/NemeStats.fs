@@ -7,6 +7,12 @@ open NemeStats.Import.Date
 
 // https://nemestatsapiversion2.docs.apiary.io/#reference
 
+type AuthenticationToken =
+    {
+        Token: string;
+        Expiration: DateTime;
+    }
+
 type GamingGroup =
     {
         Id: int

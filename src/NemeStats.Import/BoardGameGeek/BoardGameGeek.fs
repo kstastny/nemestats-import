@@ -2,14 +2,22 @@ namespace NemeStats.Import.BoardGameGeek
 
 open NemeStats.Import.Date
 
-type Player =
+
+type PlayerIdentification =
     {
         UserId: int option
         Username: string option
         Name: string option
+    }
+
+
+type Player =
+    {
+        PlayerIdentification: PlayerIdentification
         Score: int option
         Win: bool
     }
+
 
 
 type Play =

@@ -39,9 +39,12 @@ module private Mapping =
     
     let xmlPlayerToPlayer (player: Plays.Player) =
         {
-            UserId = player.Userid |> zeroToNone
-            Username = player.Username |> Option.bind emptyStringToNone
-            Name = player.Name |> Option.bind emptyStringToNone
+            PlayerIdentification =
+                {
+                    UserId = player.Userid |> zeroToNone
+                    Username = player.Username |> Option.bind emptyStringToNone
+                    Name = player.Name |> Option.bind emptyStringToNone
+                }
             Score = player.Score
             Win = player.Win
         }
@@ -70,13 +73,13 @@ let getPageCount (p: Plays.Plays) =
 
 
 
-let getPlays username (dateFrom: Date) (dateTo: Date) =
+let getPlays cancellationToken username (dateFrom: Date) (dateTo: Date) =
 
     taskResult {
         let getPage pIndex =
             getPlaysUri username dateFrom dateTo pIndex
             |> Http.createRequest System.Net.Http.HttpMethod.Get
-            |> Http.getResponse CancellationToken.None
+            |> Http.getResponse cancellationToken
             |> TaskResult.map Plays.Parse
 
         let headPage = getPage 0

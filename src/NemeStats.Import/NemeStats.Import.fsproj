@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Date.fs" />
     <Compile Include="Rop.fs" />
+    <Compile Include="Serialization.fs" />
     <Compile Include="Http.fs" />
     <EmbeddedResource Include="BoardGameGeek\SampleData\plays.xml" />
     <Compile Include="BoardGameGeek\BoardGameGeek.fs" />
@@ -14,7 +15,9 @@
     <EmbeddedResource Include="NemeStats\SampleData\GetPlayersInGamingGroup.json" />
     <Compile Include="NemeStats\NemeStats.fs" />
     <Compile Include="NemeStats\Api.fs" />
-    <Compile Include="Converter.fs" />
+    <Compile Include="Converter\Converter.fs" />
+    <EmbeddedResource Include="Converter\PlayerSynonyms.json" />
+    <Compile Include="Importer.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

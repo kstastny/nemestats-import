@@ -15,7 +15,7 @@ let private tryParseDate (d: string) =
     | _, (true, _) -> TDate d |> Some
     | _, (false, _) -> None
 
-let create d = tryParseDate d
+let fromString d = tryParseDate d
 
 let fromDateTime (d: DateTime) = d.ToString dateFormat |> TDate
 let toDateTime (TDate  x) = x |> DateTime.Parse
@@ -27,3 +27,6 @@ let tryToDateTime (TDate  x) =
 let value (TDate x) = x
 
 let Today = DateTime.Today.ToString dateFormat |> TDate
+
+
+let create(year, month, day) = DateTime(year, month, day) |> fromDateTime

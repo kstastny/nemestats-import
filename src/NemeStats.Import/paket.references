@@ -4,6 +4,8 @@ group Server
     FSharp.Data
 
     TaskBuilder.fs
+
+    Newtonsoft.Json
     
     Serilog
     Serilog.AspNetCore
