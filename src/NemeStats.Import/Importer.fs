@@ -31,18 +31,38 @@ let getMissingPlayers cancellationToken bggUsername (gamingGroup: GamingGroup) (
     
     
 //TODO handle UNKNOWN PLAYERS - some higher level import logic
-//TODO support for canonical names!
 
 
-let createPlayers cancellationToken authenticationToken gamingGroup (players: PlayerIdentification list) =
+let createPlayers getCanonicalName cancellationToken authenticationToken gamingGroup (players: PlayerIdentification list) =
     taskResult {
         return!
             players
-            |> List.choose (fun x -> x.Name)
+            |> List.choose (fun x -> x.Name |> Option.map getCanonicalName)
             |> List.distinct 
             |> List.map (fun x -> Api.Players.createPlayer cancellationToken authenticationToken gamingGroup x)
-            //TODO TEST THIS
-            //TODO mb we should return all correct results and all errors? if we need the correct results even when something fails. but then we could not return Result
             |> TaskResult.bisequence
     }    
     
+
+let private asyncTimeoutMs = 30000
+let private maxConcurrentCalls = 5
+
+let private runSync cancellationToken x =
+    Async.RunSynchronously(x, timeout = asyncTimeoutMs, cancellationToken = cancellationToken )
+
+/// alternative implementation that limits number of concurrent calls from this function at the cost of blocking thread
+/// TODO rewrite to use Semaphore or TPL DataFlow
+let createPlayersThrottled getCanonicalName cancellationToken authenticationToken gamingGroup (players: PlayerIdentification list) =
+        players
+        |> List.choose (fun x -> x.Name |> Option.map getCanonicalName)
+        |> List.distinct
+        |> List.chunkBySize maxConcurrentCalls
+        |> List.map (fun chunk ->
+                chunk
+                |> List.map (fun x -> Api.Players.createPlayer cancellationToken authenticationToken gamingGroup x)
+                |> List.map (fun t -> t |> Async.AwaitTask |> runSync cancellationToken )
+            )
+        |> List.concat
+        |> bisequence
+            
+      

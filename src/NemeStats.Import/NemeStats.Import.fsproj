@@ -16,7 +16,9 @@
     <Compile Include="NemeStats\NemeStats.fs" />
     <Compile Include="NemeStats\Api.fs" />
     <Compile Include="Converter\Converter.fs" />
-    <EmbeddedResource Include="Converter\PlayerSynonyms.json" />
+    <EmbeddedResource Include="Converter\PlayerSynonyms.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Compile Include="Importer.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
