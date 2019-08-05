@@ -11,11 +11,11 @@ open NemeStats.Import.NemeStats
 
 
 
+//TODO 
 /// Return BGG players that are not created in NemeStats
-let getMissingPlayers cancellationToken bggUsername (gamingGroup: GamingGroup) () =
+let getMissingPlayers cancellationToken bggUsername (gamingGroup: GamingGroup) dateFrom dateTo =
     taskResult {
-        //TODO parameter - dateFrom, dateTo
-        let! bggPlays = BoardGameGeek.Api.getPlays cancellationToken bggUsername (Date.create(2019,5,1)) Date.Today
+        let! bggPlays = BoardGameGeek.Api.getPlays cancellationToken bggUsername dateFrom (dateTo |> Option.defaultValue Date.Today)
         let! nemePlayers = NemeStats.Api.Players.getPlayersInGamingGroup cancellationToken gamingGroup
         
         let nemePlayerNameSet = nemePlayers |> List.map (fun x -> Some x.Name) |> Set.ofList
@@ -30,7 +30,7 @@ let getMissingPlayers cancellationToken bggUsername (gamingGroup: GamingGroup) (
     
     
     
-//TODO handle UNKNOWN PLAYERS - some higher level import logic
+//TODO handle UNKNOWN PLAYERS - some higher level import logic, necessary for importing games
 
 
 let createPlayers getCanonicalName cancellationToken authenticationToken gamingGroup (players: PlayerIdentification list) =

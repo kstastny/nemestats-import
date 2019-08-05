@@ -10,13 +10,21 @@ group Server
 
     nuget Newtonsoft.Json
 
-    //logging
+    // logging
     nuget Serilog
     nuget Serilog.AspNetCore
     nuget Serilog.Sinks.Console
     nuget Serilog.Sinks.File
     nuget Serilog.Formatting.Compact
     nuget Destructurama.FSharp.NetCore
+
+    // Azure Functions
+    nuget Microsoft.NET.Sdk.Functions
+    nuget Microsoft.Identity.Client
+    nuget Microsoft.Extensions.Configuration
+    nuget Microsoft.Extensions.Configuration.Json
+    nuget Microsoft.Extensions.Configuration.EnvironmentVariables
+    nuget Microsoft.Extensions.Configuration.FileExtensions
 
 
 

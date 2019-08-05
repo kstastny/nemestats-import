@@ -4,6 +4,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NemeStats.Import", "NemeSta
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NemeStats.Import.Console", "NemeStats.Import.Console\NemeStats.Import.Console.fsproj", "{8C3F3009-E70B-4F01-B599-2E51938FE873}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "NemeStats.Import.FunctionApp", "NemeStats.Import.FunctionApp\NemeStats.Import.FunctionApp.fsproj", "{77E37E31-B151-4CB9-A074-E98F2A937549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{8C3F3009-E70B-4F01-B599-2E51938FE873}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C3F3009-E70B-4F01-B599-2E51938FE873}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C3F3009-E70B-4F01-B599-2E51938FE873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E37E31-B151-4CB9-A074-E98F2A937549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E37E31-B151-4CB9-A074-E98F2A937549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E37E31-B151-4CB9-A074-E98F2A937549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E37E31-B151-4CB9-A074-E98F2A937549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
